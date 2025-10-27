@@ -45,3 +45,14 @@
 - [ ] Modo escuro/claro
 - [ ] Notificações push
 
+
+
+## Melhorias do Layout-8
+
+### Header Avançado
+- [x] Implementar Breadcrumbs para navegação contextual
+- [x] Adicionar barra de busca global
+- [x] Implementar sistema de notificações com dropdown
+- [x] Criar menu de usuário com dropdown (perfil, configurações, logout)
+- [x] Adicionar ações rápidas no header
+
