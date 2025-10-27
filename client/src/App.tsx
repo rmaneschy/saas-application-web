@@ -3,39 +3,60 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { RequireAuth } from "./components/RequireAuth";
+import { AuthProvider } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import ResetPassword from "./pages/auth/ResetPassword";
 
 function Router() {
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
+      {/* Redireciona root para dashboard */}
+      <Route path="/">
+        {() => {
+          window.location.href = '/dashboard';
+          return null;
+        }}
+      </Route>
+
+      {/* Rotas de autenticação (públicas) */}
+      <Route path="/auth/login" component={Login} />
+      <Route path="/auth/register" component={Register} />
+      <Route path="/auth/forgot-password" component={ForgotPassword} />
+      <Route path="/auth/reset-password" component={ResetPassword} />
+
+      {/* Rotas protegidas */}
+      <Route path="/dashboard">
+        <RequireAuth>
+          <Dashboard />
+        </RequireAuth>
+      </Route>
+
+      {/* Rotas de erro */}
+      <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
-
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+      <ThemeProvider defaultTheme="light">
+        <AuthProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </AuthProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );
 }
 
 export default App;
+
