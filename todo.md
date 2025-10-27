@@ -20,11 +20,11 @@
 - [x] Página de Redefinir Senha
 
 ### Layout Base
-- [ ] Implementar Layout-8 (sidebar + header)
-- [ ] Criar componente Sidebar
-- [ ] Criar componente Header (mobile)
-- [ ] Criar componente Footer
-- [ ] Implementar menu de navegação
+- [x] Implementar Layout-8 (sidebar + header)
+- [x] Criar componente Sidebar
+- [x] Criar componente Header (mobile)
+- [x] Criar componente Footer
+- [x] Implementar menu de navegação
 
 ### Controle de Acesso
 - [x] Implementar hook useAuthorization
@@ -33,9 +33,9 @@
 - [x] Renderização condicional baseada em permissões
 
 ### Dashboard
-- [x] Página inicial do dashboard (básica)
-- [ ] Página de perfil do usuário
-- [ ] Página de configurações
+- [x] Página inicial do dashboard (completa)
+- [x] Página de perfil do usuário
+- [x] Página de configurações
 
 ## Melhorias Futuras
 - [ ] Testes unitários

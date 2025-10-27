@@ -7,6 +7,8 @@ import { RequireAuth } from "./components/RequireAuth";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -33,6 +35,18 @@ function Router() {
       <Route path="/dashboard">
         <RequireAuth>
           <Dashboard />
+        </RequireAuth>
+      </Route>
+
+      <Route path="/profile">
+        <RequireAuth>
+          <Profile />
+        </RequireAuth>
+      </Route>
+
+      <Route path="/settings">
+        <RequireAuth>
+          <Settings />
         </RequireAuth>
       </Route>
 
