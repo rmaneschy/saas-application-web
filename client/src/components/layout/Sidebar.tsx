@@ -1,64 +1,157 @@
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { SIDEBAR_MENU } from '@/config/menu.config';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAuthorization } from '@/hooks/useAuthorization';
-import {
-  Home,
-  LayoutDashboard,
-  Settings,
-  Shield,
-  User,
-  Users,
-} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import type { MenuItem } from '@/../../shared/types/menu';
+import { Home } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
-
-interface MenuItem {
-  title: string;
-  path: string;
-  icon: React.ReactNode;
-  requiredRoles?: string[];
-}
-
-const menuItems: MenuItem[] = [
-  {
-    title: 'Dashboard',
-    path: '/dashboard',
-    icon: <LayoutDashboard className="h-5 w-5" />,
-  },
-  {
-    title: 'Perfil',
-    path: '/profile',
-    icon: <User className="h-5 w-5" />,
-  },
-  {
-    title: 'Configurações',
-    path: '/settings',
-    icon: <Settings className="h-5 w-5" />,
-  },
-  {
-    title: 'Usuários',
-    path: '/users',
-    icon: <Users className="h-5 w-5" />,
-    requiredRoles: ['ROLE_ADMIN'],
-  },
-  {
-    title: 'Segurança',
-    path: '/security',
-    icon: <Shield className="h-5 w-5" />,
-    requiredRoles: ['ROLE_ADMIN', 'ROLE_MODERATOR'],
-  },
-];
 
 export function Sidebar() {
   const [location] = useLocation();
   const { user } = useAuth();
   const { hasAnyRole } = useAuthorization();
 
-  const isActive = (path: string) => location === path;
+  const isActive = (path?: string) => path && location === path;
+
+  const hasActiveChild = (items?: MenuItem[]): boolean => {
+    if (!items) return false;
+    return items.some((item) => {
+      if (item.path && isActive(item.path)) return true;
+      if (item.children) return hasActiveChild(item.children);
+      return false;
+    });
+  };
 
   const canAccessMenuItem = (item: MenuItem) => {
     if (!item.requiredRoles || item.requiredRoles.length === 0) {
       return true;
     }
     return hasAnyRole(...item.requiredRoles);
+  };
+
+  const buildMenuChildren = (items: MenuItem[]) => {
+    return items.map((item, index) => {
+      if (item.disabled) return null;
+      if (item.separator) return <DropdownMenuSeparator key={index} />;
+      
+      if (!canAccessMenuItem(item)) return null;
+
+      if (item.children) {
+        return (
+          <DropdownMenuSub key={index}>
+            <DropdownMenuSubTrigger
+              data-here={hasActiveChild(item.children) || undefined}
+              className="data-[here=true]:bg-accent data-[here=true]:text-accent-foreground"
+            >
+              {item.title}
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent className="w-[200px]">
+              <DropdownMenuLabel>{item.title}</DropdownMenuLabel>
+              {buildMenuChildren(item.children)}
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+        );
+      }
+
+      return (
+        <DropdownMenuItem key={index} asChild>
+          <Link href={item.path || '#'}>
+            <a className="w-full">{item.title}</a>
+          </Link>
+        </DropdownMenuItem>
+      );
+    });
+  };
+
+  const buildMenu = () => {
+    return SIDEBAR_MENU.map((item, index) => {
+      if (!canAccessMenuItem(item)) return null;
+
+      return (
+        <div key={index} className="flex flex-col items-center">
+          {item.children ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  data-here={hasActiveChild(item.children) || undefined}
+                  className={cn(
+                    'flex flex-col items-center justify-center w-[60px] h-[60px] gap-1 rounded-lg shadow-none relative',
+                    'text-xs font-medium text-muted-foreground bg-transparent border border-transparent',
+                    'hover:text-primary hover:bg-background hover:border-border',
+                    'data-[state=open]:text-primary data-[state=open]:bg-background data-[state=open]:border-border',
+                    'data-[here=true]:text-primary data-[here=true]:bg-background data-[here=true]:border-border'
+                  )}
+                >
+                  {item.icon && <item.icon className="h-5 w-5" />}
+                  <span className="text-[10px] leading-tight text-center">
+                    {item.title}
+                  </span>
+                  {item.badge && (
+                    <span
+                      className={cn(
+                        'absolute top-1 right-1 px-1 py-0.5 text-[8px] font-semibold rounded',
+                        item.badgeVariant === 'destructive' && 'bg-red-500 text-white',
+                        item.badgeVariant === 'secondary' && 'bg-blue-500 text-white',
+                        item.badgeVariant === 'default' && 'bg-green-500 text-white',
+                        !item.badgeVariant && 'bg-primary text-primary-foreground'
+                      )}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" side="right" className="w-[200px]">
+                <DropdownMenuLabel>{item.title}</DropdownMenuLabel>
+                {buildMenuChildren(item.children)}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link href={item.path || '#'}>
+              <a
+                data-active={isActive(item.path) || undefined}
+                className={cn(
+                  'flex flex-col items-center justify-center w-[60px] h-[60px] gap-1 rounded-lg relative',
+                  'text-xs font-medium text-muted-foreground bg-transparent border border-transparent',
+                  'hover:text-primary hover:bg-background hover:border-border',
+                  'data-[active=true]:text-primary data-[active=true]:bg-background data-[active=true]:border-border'
+                )}
+              >
+                {item.icon && <item.icon className="h-5 w-5" />}
+                <span className="text-[10px] leading-tight text-center">
+                  {item.title}
+                </span>
+                {item.badge && (
+                  <span
+                    className={cn(
+                      'absolute top-1 right-1 px-1 py-0.5 text-[8px] font-semibold rounded',
+                      item.badgeVariant === 'destructive' && 'bg-red-500 text-white',
+                      item.badgeVariant === 'secondary' && 'bg-blue-500 text-white',
+                      item.badgeVariant === 'default' && 'bg-green-500 text-white',
+                      !item.badgeVariant && 'bg-primary text-primary-foreground'
+                    )}
+                  >
+                    {item.badge}
+                  </span>
+                )}
+              </a>
+            </Link>
+          )}
+        </div>
+      );
+    });
   };
 
   return (
@@ -71,34 +164,8 @@ export function Sidebar() {
       </Link>
 
       {/* Menu Items */}
-      <nav className="flex flex-col gap-2 flex-1">
-        {menuItems.map((item) => {
-          if (!canAccessMenuItem(item)) return null;
-
-          return (
-            <Link key={item.path} href={item.path}>
-              <a
-                className={`
-                  flex items-center justify-center w-12 h-12 rounded-lg
-                  transition-colors relative group
-                  ${
-                    isActive(item.path)
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-                  }
-                `}
-                title={item.title}
-              >
-                {item.icon}
-                
-                {/* Tooltip */}
-                <span className="absolute left-full ml-2 px-2 py-1 bg-popover text-popover-foreground text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-border shadow-md">
-                  {item.title}
-                </span>
-              </a>
-            </Link>
-          );
-        })}
+      <nav className="flex flex-col gap-2 flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+        {buildMenu()}
       </nav>
 
       {/* User Avatar */}

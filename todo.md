@@ -56,3 +56,12 @@
 - [x] Criar menu de usuário com dropdown (perfil, configurações, logout)
 - [x] Adicionar ações rápidas no header
 
+
+
+### Sidebar Avançado
+- [x] Implementar menu hierárquico com submenus
+- [x] Adicionar badges e indicadores nos itens
+- [x] Implementar animações de expansão/colapso (via DropdownMenu)
+- [x] Criar agrupamento de itens por categoria
+- [x] Adicionar tooltip expandido com descrição (via DropdownMenu)
+
