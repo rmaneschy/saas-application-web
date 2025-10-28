@@ -87,29 +87,28 @@ export function Sidebar() {
                 <Button
                   data-here={hasActiveChild(item.children) || undefined}
                   className={cn(
-                    'flex flex-col items-center justify-center w-[60px] h-[60px] gap-1 rounded-lg shadow-none relative',
-                    'text-xs font-medium text-muted-foreground bg-transparent border border-transparent',
-                    'hover:text-primary hover:bg-background hover:border-border',
-                    'data-[state=open]:text-primary data-[state=open]:bg-background data-[state=open]:border-border',
-                    'data-[here=true]:text-primary data-[here=true]:bg-background data-[here=true]:border-border'
+                    'flex flex-col items-center justify-center w-[60px] h-[60px] gap-1.5 rounded-xl shadow-none relative',
+                    'text-[10px] font-medium text-gray-600 bg-transparent border border-transparent',
+                    'hover:text-gray-900 hover:bg-white hover:shadow-sm',
+                    'data-[state=open]:text-gray-900 data-[state=open]:bg-white data-[state=open]:shadow-sm data-[state=open]:border-gray-100',
+                    'data-[here=true]:text-gray-900 data-[here=true]:bg-white data-[here=true]:shadow-sm data-[here=true]:border-gray-100',
+                    'transition-all duration-200'
                   )}
                 >
-                  {item.icon && <item.icon className="h-5 w-5" />}
-                  <span className="text-[10px] leading-tight text-center">
+                  {item.icon && <item.icon className="h-5 w-5 stroke-[1.5]" />}
+                  <span className="leading-tight text-center">
                     {item.title}
                   </span>
                   {item.badge && (
                     <span
                       className={cn(
-                        'absolute top-1 right-1 px-1 py-0.5 text-[8px] font-semibold rounded',
-                        item.badgeVariant === 'destructive' && 'bg-red-500 text-white',
-                        item.badgeVariant === 'secondary' && 'bg-blue-500 text-white',
-                        item.badgeVariant === 'default' && 'bg-green-500 text-white',
-                        !item.badgeVariant && 'bg-primary text-primary-foreground'
+                        'absolute top-1.5 right-1.5 h-2.5 w-2.5 rounded-full',
+                        item.badgeVariant === 'destructive' && 'bg-pink-500',
+                        item.badgeVariant === 'secondary' && 'bg-purple-500',
+                        item.badgeVariant === 'default' && 'bg-yellow-400',
+                        !item.badgeVariant && 'bg-blue-500'
                       )}
-                    >
-                      {item.badge}
-                    </span>
+                    />
                   )}
                 </Button>
               </DropdownMenuTrigger>
@@ -123,28 +122,27 @@ export function Sidebar() {
               <a
                 data-active={isActive(item.path) || undefined}
                 className={cn(
-                  'flex flex-col items-center justify-center w-[60px] h-[60px] gap-1 rounded-lg relative',
-                  'text-xs font-medium text-muted-foreground bg-transparent border border-transparent',
-                  'hover:text-primary hover:bg-background hover:border-border',
-                  'data-[active=true]:text-primary data-[active=true]:bg-background data-[active=true]:border-border'
+                  'flex flex-col items-center justify-center w-[60px] h-[60px] gap-1.5 rounded-xl relative',
+                  'text-[10px] font-medium text-gray-600 bg-transparent border border-transparent',
+                  'hover:text-gray-900 hover:bg-white hover:shadow-sm',
+                  'data-[active=true]:text-gray-900 data-[active=true]:bg-white data-[active=true]:shadow-sm data-[active=true]:border-gray-100',
+                  'transition-all duration-200'
                 )}
               >
-                {item.icon && <item.icon className="h-5 w-5" />}
-                <span className="text-[10px] leading-tight text-center">
+                {item.icon && <item.icon className="h-5 w-5 stroke-[1.5]" />}
+                <span className="leading-tight text-center">
                   {item.title}
                 </span>
                 {item.badge && (
                   <span
                     className={cn(
-                      'absolute top-1 right-1 px-1 py-0.5 text-[8px] font-semibold rounded',
-                      item.badgeVariant === 'destructive' && 'bg-red-500 text-white',
-                      item.badgeVariant === 'secondary' && 'bg-blue-500 text-white',
-                      item.badgeVariant === 'default' && 'bg-green-500 text-white',
-                      !item.badgeVariant && 'bg-primary text-primary-foreground'
+                      'absolute top-1.5 right-1.5 h-2.5 w-2.5 rounded-full',
+                      item.badgeVariant === 'destructive' && 'bg-pink-500',
+                      item.badgeVariant === 'secondary' && 'bg-purple-500',
+                      item.badgeVariant === 'default' && 'bg-yellow-400',
+                      !item.badgeVariant && 'bg-blue-500'
                     )}
-                  >
-                    {item.badge}
-                  </span>
+                  />
                 )}
               </a>
             </Link>
@@ -155,22 +153,22 @@ export function Sidebar() {
   };
 
   return (
-    <aside className="fixed left-0 top-0 z-20 h-screen w-20 bg-muted border-r border-border flex flex-col items-center py-6">
+    <aside className="fixed left-0 top-0 z-20 h-screen w-[72px] bg-gray-50 border-r border-gray-200 flex flex-col items-center py-6">
       {/* Logo */}
       <Link href="/dashboard">
-        <a className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary text-primary-foreground mb-8 hover:opacity-90 transition-opacity">
-          <Home className="h-6 w-6" />
+        <a className="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-600 text-white mb-8 hover:bg-blue-700 transition-colors shadow-sm">
+          <Home className="h-5 w-5" />
         </a>
       </Link>
 
       {/* Menu Items */}
-      <nav className="flex flex-col gap-2 flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+      <nav className="flex flex-col gap-2 flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent px-1.5">
         {buildMenu()}
       </nav>
 
       {/* User Avatar */}
-      <div className="mt-auto">
-        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary text-primary-foreground text-sm font-semibold">
+      <div className="mt-auto pt-4 border-t border-gray-200 w-full flex justify-center">
+        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 text-white text-xs font-semibold shadow-sm ring-2 ring-white">
           {user?.firstName?.[0]}{user?.lastName?.[0]}
         </div>
       </div>

@@ -65,3 +65,13 @@
 - [x] Criar agrupamento de itens por categoria
 - [x] Adicionar tooltip expandido com descrição (via DropdownMenu)
 
+
+
+## Ajustes e Correções
+
+### Layout-8 Refinamentos
+- [x] Corrigir imperfeições da sidebar (espaçamento, alinhamento, cores)
+- [x] Ajustar título da aplicação (remover %VITE_APP_TITLE%)
+- [x] Alinhar design com Layout-8 original do Metronic
+- [x] Revisar responsividade e transições
+
