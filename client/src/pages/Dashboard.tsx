@@ -1,12 +1,138 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { useAuth } from '@/contexts/AuthContext';
-import { useAuthorization } from '@/hooks/useAuthorization';
-import { Activity, TrendingUp, Users } from 'lucide-react';
+import { ChartCard } from '@/components/dashboard/ChartCard';
+import { ProgressCard } from '@/components/dashboard/ProgressCard';
+import { RecentActivity } from '@/components/dashboard/RecentActivity';
+import { StatCard } from '@/components/dashboard/StatCard';
+import { TaskList } from '@/components/dashboard/TaskList';
+import { DollarSign, ShoppingCart, TrendingUp, Users } from 'lucide-react';
 
 export default function Dashboard() {
-  const { user } = useAuth();
-  const { isAdmin, isModerator } = useAuthorization();
+  // Dados de exemplo para estatísticas
+  const stats = [
+    {
+      title: 'Receita Total',
+      value: 'R$ 45.231',
+      icon: DollarSign,
+      trend: { value: 12.5, isPositive: true },
+      iconColor: 'text-green-600',
+      iconBgColor: 'bg-green-50',
+    },
+    {
+      title: 'Novos Usuários',
+      value: '2.350',
+      icon: Users,
+      trend: { value: 8.2, isPositive: true },
+      iconColor: 'text-blue-600',
+      iconBgColor: 'bg-blue-50',
+    },
+    {
+      title: 'Vendas',
+      value: '1.234',
+      icon: ShoppingCart,
+      trend: { value: 3.1, isPositive: false },
+      iconColor: 'text-purple-600',
+      iconBgColor: 'bg-purple-50',
+    },
+    {
+      title: 'Taxa de Conversão',
+      value: '3.2%',
+      icon: TrendingUp,
+      trend: { value: 5.4, isPositive: true },
+      iconColor: 'text-orange-600',
+      iconBgColor: 'bg-orange-50',
+    },
+  ];
+
+  // Dados de exemplo para gráfico de área
+  const revenueData = [
+    { month: 'Jan', value: 12000 },
+    { month: 'Fev', value: 19000 },
+    { month: 'Mar', value: 15000 },
+    { month: 'Abr', value: 25000 },
+    { month: 'Mai', value: 22000 },
+    { month: 'Jun', value: 30000 },
+    { month: 'Jul', value: 28000 },
+  ];
+
+  // Dados de exemplo para gráfico de barras
+  const salesData = [
+    { category: 'Produto A', value: 400 },
+    { category: 'Produto B', value: 300 },
+    { category: 'Produto C', value: 500 },
+    { category: 'Produto D', value: 280 },
+    { category: 'Produto E', value: 390 },
+  ];
+
+  // Dados de exemplo para atividades recentes
+  const activities = [
+    {
+      id: '1',
+      user: { name: 'João Silva', initials: 'JS' },
+      action: 'criou um novo pedido #1234',
+      time: 'há 5 minutos',
+      type: 'success' as const,
+    },
+    {
+      id: '2',
+      user: { name: 'Maria Santos', initials: 'MS' },
+      action: 'atualizou o perfil do cliente',
+      time: 'há 15 minutos',
+      type: 'info' as const,
+    },
+    {
+      id: '3',
+      user: { name: 'Pedro Costa', initials: 'PC' },
+      action: 'cancelou o pedido #1230',
+      time: 'há 1 hora',
+      type: 'warning' as const,
+    },
+    {
+      id: '4',
+      user: { name: 'Ana Lima', initials: 'AL' },
+      action: 'reportou um erro no sistema',
+      time: 'há 2 horas',
+      type: 'error' as const,
+    },
+  ];
+
+  // Dados de exemplo para tarefas
+  const tasks = [
+    {
+      id: '1',
+      title: 'Revisar relatório mensal',
+      dueDate: 'Hoje, 14:00',
+      priority: 'high' as const,
+      completed: false,
+    },
+    {
+      id: '2',
+      title: 'Atualizar documentação da API',
+      dueDate: 'Hoje, 16:00',
+      priority: 'medium' as const,
+      completed: false,
+    },
+    {
+      id: '3',
+      title: 'Reunião com equipe de vendas',
+      dueDate: 'Amanhã, 10:00',
+      priority: 'high' as const,
+      completed: false,
+    },
+    {
+      id: '4',
+      title: 'Responder e-mails pendentes',
+      dueDate: 'Hoje, 18:00',
+      priority: 'low' as const,
+      completed: true,
+    },
+  ];
+
+  // Dados de exemplo para progresso
+  const progressItems = [
+    { id: '1', label: 'Meta de Vendas', value: 750, max: 1000 },
+    { id: '2', label: 'Novos Cadastros', value: 2350, max: 3000 },
+    { id: '3', label: 'Tickets Resolvidos', value: 89, max: 100 },
+  ];
 
   return (
     <DashboardLayout>
@@ -14,132 +140,44 @@ export default function Dashboard() {
         {/* Header */}
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-muted-foreground mt-2">
-            Bem-vindo de volta, {user?.firstName}!
-          </p>
+          <p className="text-muted-foreground mt-2">Bem-vindo de volta! Aqui está um resumo do seu negócio.</p>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total de Usuários</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">1,234</div>
-              <p className="text-xs text-muted-foreground">
-                +20% em relação ao mês passado
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Atividade</CardTitle>
-              <Activity className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">+573</div>
-              <p className="text-xs text-muted-foreground">
-                +201 desde a última hora
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Crescimento</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">+12.5%</div>
-              <p className="text-xs text-muted-foreground">
-                +4.5% em relação ao trimestre anterior
-              </p>
-            </CardContent>
-          </Card>
+        {/* Stats Grid */}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {stats.map((stat, index) => (
+            <StatCard key={index} {...stat} />
+          ))}
         </div>
 
-        {/* User Info and Permissions */}
+        {/* Charts Row */}
         <div className="grid gap-4 md:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle>Informações do Perfil</CardTitle>
-              <CardDescription>Seus dados de usuário</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Nome Completo</p>
-                <p className="text-base">{user?.fullName}</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Email</p>
-                <p className="text-base">{user?.email}</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Username</p>
-                <p className="text-base">{user?.username}</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Permissões e Papéis</CardTitle>
-              <CardDescription>Suas funções no sistema</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex flex-wrap gap-2">
-                {user?.roles.map((role) => (
-                  <div
-                    key={role}
-                    className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold"
-                  >
-                    {role.replace('ROLE_', '')}
-                  </div>
-                ))}
-              </div>
-              <div className="space-y-2">
-                {isAdmin() && (
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="h-2 w-2 rounded-full bg-green-500" />
-                    <span className="text-green-600 dark:text-green-400">
-                      Acesso de Administrador
-                    </span>
-                  </div>
-                )}
-                {isModerator() && (
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="h-2 w-2 rounded-full bg-blue-500" />
-                    <span className="text-blue-600 dark:text-blue-400">
-                      Acesso de Moderador
-                    </span>
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+          <ChartCard
+            title="Receita Mensal"
+            description="Evolução da receita nos últimos 7 meses"
+            data={revenueData}
+            type="area"
+            dataKey="value"
+            xAxisKey="month"
+            color="#10b981"
+          />
+          <ChartCard
+            title="Vendas por Produto"
+            description="Top 5 produtos mais vendidos"
+            data={salesData}
+            type="bar"
+            dataKey="value"
+            xAxisKey="category"
+            color="#3b82f6"
+          />
         </div>
 
-        {/* Welcome Message */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Bem-vindo ao Sistema!</CardTitle>
-            <CardDescription>
-              Sua aplicação SaaS está funcionando perfeitamente
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              O sistema de autenticação está totalmente integrado com a API backend.
-              O Layout-8 do Metronic foi implementado com sucesso, oferecendo uma
-              interface profissional e responsiva. Você pode navegar pelos menus
-              laterais (desktop) ou pelo menu hambúrguer (mobile) para acessar
-              diferentes seções do sistema.
-            </p>
-          </CardContent>
-        </Card>
+        {/* Bottom Grid */}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <RecentActivity activities={activities} />
+          <TaskList tasks={tasks} />
+          <ProgressCard title="Metas do Mês" description="Progresso das metas estabelecidas" items={progressItems} />
+        </div>
       </div>
     </DashboardLayout>
   );

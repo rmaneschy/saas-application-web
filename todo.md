@@ -75,3 +75,15 @@
 - [x] Alinhar design com Layout-8 original do Metronic
 - [x] Revisar responsividade e transições
 
+
+
+## Dashboard Widgets
+
+### Componentes de Dashboard
+- [x] Cards de estatísticas com ícones e tendências
+- [x] Gráficos (linha, barra)
+- [x] Tabela de atividades recentes
+- [x] Lista de tarefas pendentes
+- [x] Widgets de progresso
+- [x] Cards informativos
+
