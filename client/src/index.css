@@ -43,6 +43,11 @@
 }
 
 :root {
+  /* Layout variables */
+  --sidebar-width: 90px;
+  --header-height: 60px;
+  --spacing: 4px;
+  
   --primary: var(--color-blue-700);
   --primary-foreground: var(--color-blue-50);
   --sidebar-primary: var(--color-blue-600);

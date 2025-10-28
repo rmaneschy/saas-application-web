@@ -25,11 +25,14 @@ export function Toolbar() {
   const unreadCount = notifications.filter((n) => n.unread).length;
 
   return (
-    <div className="sticky top-0 z-10 border-b border-gray-200/50 bg-white/80 backdrop-blur-sm relative">
+    <div className="sticky top-0 z-10 border-b border-gray-200/50 bg-white/80 backdrop-blur-sm relative" style={{ height: 'var(--header-height)' }}>
       {/* Header continuity bar - extends sidebar into toolbar */}
-      <div className="absolute left-0 top-0 w-[90px] h-[60px] bg-gray-50/80 backdrop-blur-sm border-r border-gray-200/50" />
+      <div 
+        className="absolute left-0 top-0 bg-gray-50/80 backdrop-blur-sm border-r border-gray-200/50" 
+        style={{ width: 'var(--sidebar-width)', height: 'var(--header-height)' }}
+      />
       
-      <div className="container h-[60px] flex items-center justify-between gap-4">
+      <div className="container h-full flex items-center justify-between gap-4">
         {/* Breadcrumbs */}
         <div className="flex-1">
           <Breadcrumbs />

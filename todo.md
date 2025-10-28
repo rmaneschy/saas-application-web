@@ -105,3 +105,12 @@
 - [x] Definir altura do header/toolbar para 60px
 - [x] Criar efeito de continuidade visual entre sidebar e toolbar
 
+
+
+## Refinamento CSS Layout-8
+
+### Variáveis CSS e Espaçamento
+- [x] Adicionar variáveis CSS --sidebar-width e --header-height
+- [x] Usar margin-inline-start para o conteúdo principal
+- [x] Adicionar margem de 20px no desktop (lg:m-5)
+

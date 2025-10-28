@@ -21,16 +21,18 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
       {/* Main Content */}
       <div
-        className={`
-          flex flex-col flex-1
-          ${isMobile ? 'pt-16' : 'ml-[90px]'}
-        `}
+        className={isMobile ? 'flex flex-col flex-1 pt-16' : 'flex flex-col flex-1'}
+        style={!isMobile ? { marginInlineStart: 'var(--sidebar-width)' } : undefined}
       >
         {/* Desktop Toolbar */}
         {!isMobile && <Toolbar />}
 
-        {/* Page Content */}
-        <main className="flex-1 p-6 bg-gray-50/50">{children}</main>
+        {/* Page Content with spacing */}
+        <main 
+          className={`flex-1 bg-gray-50/50 ${isMobile ? 'p-4' : 'p-5 lg:m-5'}`}
+        >
+          {children}
+        </main>
 
         {/* Footer */}
         <Footer />
