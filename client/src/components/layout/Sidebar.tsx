@@ -155,7 +155,7 @@ export function Sidebar() {
   };
 
   return (
-    <aside className="fixed left-0 top-0 z-20 h-screen w-[72px] bg-gray-50/80 backdrop-blur-sm border-r border-gray-200/50 flex flex-col items-center py-5">
+    <aside className="fixed left-0 top-0 z-20 h-screen w-[90px] bg-gray-50/80 backdrop-blur-sm border-r border-gray-200/50 flex flex-col items-center py-5">
       {/* Logo */}
       <Link href="/dashboard">
         <a className="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-600 text-white mb-6 hover:bg-blue-700 transition-colors shadow-sm">

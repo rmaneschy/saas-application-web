@@ -96,3 +96,12 @@
 - [x] Ajustar tamanho dos ícones da sidebar (não comprimir)
 - [x] Melhorar espaçamento interno dos itens do menu
 
+
+
+## Ajustes Finais Layout-8
+
+### Dimensões e Continuidade Visual
+- [x] Ajustar largura da sidebar para 90px (era 72px)
+- [x] Definir altura do header/toolbar para 60px
+- [x] Criar efeito de continuidade visual entre sidebar e toolbar
+

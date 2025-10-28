@@ -23,7 +23,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       <div
         className={`
           flex flex-col flex-1
-          ${isMobile ? 'pt-16' : 'ml-[72px]'}
+          ${isMobile ? 'pt-16' : 'ml-[90px]'}
         `}
       >
         {/* Desktop Toolbar */}
