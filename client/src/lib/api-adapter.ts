@@ -22,6 +22,7 @@ class ApiClient {
       baseURL: apiUrl,
       headers: {
         'Content-Type': 'application/json',
+        'X-Tenant-ID': 'default'
       },
     });
 
