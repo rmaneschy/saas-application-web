@@ -25,7 +25,7 @@ export function Toolbar() {
   const unreadCount = notifications.filter((n) => n.unread).length;
 
   return (
-    <div className="border-b border-border bg-background">
+    <div className="border-b border-gray-200/50 bg-white/80 backdrop-blur-sm">
       <div className="container py-4">
         <div className="flex items-center justify-between gap-4">
           {/* Breadcrumbs */}

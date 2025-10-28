@@ -87,3 +87,12 @@
 - [x] Widgets de progresso
 - [x] Cards informativos
 
+
+
+## Correções Layout-8
+
+### Ajustes Visuais
+- [x] Corrigir sidebar e toolbar para ficarem interligadas com bordas arredondadas
+- [x] Ajustar tamanho dos ícones da sidebar (não comprimir)
+- [x] Melhorar espaçamento interno dos itens do menu
+
