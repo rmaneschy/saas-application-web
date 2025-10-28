@@ -157,11 +157,7 @@ export function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 z-20 h-screen w-20 bg-muted border-r border-border flex flex-col items-center py-6">
       {/* Logo */}
-      <Link href="/dashboard">
-        <a className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary text-primary-foreground mb-8 hover:opacity-90 transition-opacity">
-          <Home className="h-6 w-6" />
-        </a>
-      </Link>
+      <Link href="/dashboard">Dashboard</Link>
 
       {/* Menu Items */}
       <nav className="flex flex-col gap-2 flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
